@@ -12,12 +12,15 @@ font-family:Segoe UI;
 color:white;
 overflow:hidden;
 
+/* FOTO MASJID FULL */
 background:
-linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),
+linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),
 url("https://raw.githubusercontent.com/trikuntoro/jam-masjid/main/Masjid.jpg");
 
-background-size:cover;
+background-size:contain;
+background-repeat:no-repeat;
 background-position:center;
+background-color:black;
 }
 
 /* HEADER */
@@ -30,7 +33,7 @@ color:black;
 }
 
 .jamKecil{
-font-size:60px;
+font-size:70px;
 font-weight:bold;
 }
 
@@ -68,7 +71,6 @@ font-size:35px;
 font-weight:bold;
 }
 
-/* HIGHLIGHT WAKTU AKTIF */
 .active{
 background:#f39c12;
 color:white;
@@ -79,7 +81,6 @@ color:white;
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
 
 <div class="jamKecil" id="jam"></div>
@@ -87,14 +88,13 @@ color:white;
 <div class="namaMasjid">
 MASJID IRSYADUL IBAD
 <br>
-<span style="font-size:18px;">Rokan Hulu - Riau</span>
+<span style="font-size:18px;">Pasir Pengaraian - Rokan Hulu</span>
 </div>
 
 <div class="tanggal" id="tanggal"></div>
 
 </div>
 
-<!-- PANEL SHOLAT -->
 <div class="panel">
 
 <div class="item" id="subuh">
@@ -126,15 +126,17 @@ Isya
 
 <script>
 
-/* JAM */
+/* JAM + DETIK */
 function updateJam(){
 
 let now = new Date();
 
 let jam = now.getHours().toString().padStart(2,"0");
 let menit = now.getMinutes().toString().padStart(2,"0");
+let detik = now.getSeconds().toString().padStart(2 confirms "0");
 
-document.getElementById("jam").innerHTML = jam + ":" + menit;
+document.getElementById("jam").innerHTML =
+jam + ":" + menit + ":" + detik;
 
 document.getElementById("tanggal").innerHTML =
 now.toLocaleDateString("id-ID",
@@ -147,7 +149,7 @@ highlightWaktu();
 setInterval(updateJam,1000);
 
 
-/* JADWAL SHOLAT */
+/* JADWAL */
 let jadwal = {
 subuh:"05:11",
 dzuhur:"12:33",
@@ -156,7 +158,8 @@ maghrib:"18:36",
 isya:"19:47"
 };
 
-/* HIGHLIGHT SHOLAT TERDEKAT */
+
+/* HIGHLIGHT SHOLAT */
 function highlightWaktu(){
 
 let now = new Date();
@@ -173,9 +176,13 @@ let element = document.getElementById(nama);
 
 if(menitSekarang >= menitSholat &&
 menitSekarang <= menitSholat + 10){
+
 element.classList.add("active");
+
 }else{
+
 element.classList.remove("active");
+
 }
 
 }
