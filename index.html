@@ -6,6 +6,7 @@
 
 <style>
 
+/* BACKGROUND FOTO MASJID */
 body{
 margin:0;
 font-family:Arial;
@@ -16,10 +17,14 @@ linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
 url("https://raw.githubusercontent.com/trikuntoro/jam-masjid/main/Masjid.jpg");
 
 background-size:cover;
-background-position:center;
+
+/* POSISI GAMBAR NAIK KE ATAS */
+background-position:center 25%;
+
 background-attachment:fixed;
 }
 
+/* HEADER */
 .header{
 background:linear-gradient(90deg,#00416A,#799F0C);
 padding:10px;
@@ -35,15 +40,18 @@ font-weight:bold;
 font-size:20px;
 }
 
+/* LAYOUT */
 .container{
 display:flex;
 height:90vh;
 }
 
+/* SIDEBAR */
 .sidebar{
 width:230px;
 }
 
+/* WARNA TIAP SHOLAT */
 .subuh{background:#00A8FF;}
 .dzuhur{background:#FBC531;}
 .ashar{background:#8E44AD;}
@@ -60,6 +68,7 @@ font-size:32px;
 font-weight:bold;
 }
 
+/* JAM UTAMA */
 .main{
 flex:1;
 display:flex;
@@ -80,6 +89,7 @@ color:#FFD700;
 margin-top:10px;
 }
 
+/* RUNNING TEXT */
 .running{
 position:fixed;
 bottom:0;
@@ -114,6 +124,7 @@ animation:runtext 15s linear infinite;
 
 <div class="container">
 
+<!-- SIDEBAR -->
 <div class="sidebar">
 
 <div class="sholat subuh">Subuh
@@ -138,6 +149,7 @@ animation:runtext 15s linear infinite;
 
 </div>
 
+<!-- JAM -->
 <div class="main">
 <div class="clock" id="clock"></div>
 <div class="countdown" id="countdown"></div>
@@ -173,10 +185,10 @@ cekIqomah();
 setInterval(updateClock,1000);
 
 
-/* ===== JADWAL SHOLAT PASIR PENGARAIAN ===== */
+/* AMBIL JADWAL SHOLAT PASIR PENGARAIAN */
 let jadwal = {};
 
-fetch("https://api.aladhan.com/v1/timings?latitude=0.6006&longitude=100.5120&method=11&timezonestring=Asia/Jakarta")
+fetch("https://api.aladhan.com/v1/timingsByCity?city=Pasir%20Pengaraian&country=Indonesia&method=11")
 .then(res=>res.json())
 .then(data=>{
 
@@ -199,7 +211,15 @@ function cekIqomah(){
 let now = new Date();
 let sekarang = now.getHours()*60 + now.getMinutes();
 
-for(let nama in jadwal){
+let mapping = {
+Fajr:"Subuh",
+Dhuhr:"Dzuhur",
+Asr:"Ashar",
+Maghrib:"Maghrib",
+Isha:"Isya"
+};
+
+for(let nama in mapping){
 
 let waktu = jadwal[nama];
 if(!waktu) continue;
@@ -212,7 +232,7 @@ if(sekarang >= adzan && sekarang <= adzan + waktuIqomah){
 let sisa = (adzan + waktuIqomah) - sekarang;
 
 document.getElementById("countdown").innerHTML =
-"IQOMAH " + nama + " " + sisa + " MENIT";
+"IQOMAH " + mapping[nama] + " " + sisa + " MENIT";
 
 return;
 }
