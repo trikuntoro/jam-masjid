@@ -2,77 +2,81 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Jam Masjid LED</title>
+<title>Jam Digital Masjid</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
 color:white;
-background:url("https://images.unsplash.com/photo-1584286595398-a59511e0645f") no-repeat center;
+background:url("https://images.unsplash.com/photo-1591608511731-0fce8e0c2e4b") no-repeat center;
 background-size:cover;
 }
 
 /* HEADER */
 .header{
-background:rgba(0,0,0,0.6);
+background:linear-gradient(90deg,#00416A,#799F0C);
 padding:10px;
 text-align:center;
 }
 
 .namaMasjid{
-font-size:35px;
+font-size:40px;
 font-weight:bold;
 }
 
-.alamat{
-font-size:18px;
+.tanggal{
+font-size:20px;
 }
 
 /* LAYOUT */
 .container{
 display:flex;
-height:100vh;
+height:90vh;
 }
 
-/* SIDEBAR JADWAL */
+/* SIDEBAR */
 .sidebar{
-width:220px;
-background:rgba(0,0,0,0.7);
+width:230px;
 }
+
+/* WARNA TIAP SHOLAT */
+.subuh{background:#00A8FF;}
+.dzuhur{background:#FBC531;}
+.ashar{background:#8E44AD;}
+.maghrib{background:#E67E22;}
+.isya{background:#2C3E50;}
 
 .sholat{
-padding:15px;
+padding:18px;
 font-size:22px;
-border-bottom:1px solid white;
 }
 
 .waktu{
-font-size:28px;
+font-size:32px;
 font-weight:bold;
 }
 
-/* AREA JAM */
+/* JAM UTAMA */
 .main{
 flex:1;
-text-align:center;
 display:flex;
 flex-direction:column;
 justify-content:center;
+align-items:center;
 }
 
 .clock{
-font-size:110px;
+font-size:130px;
 font-weight:bold;
-}
-
-.tanggal{
-font-size:25px;
+text-shadow:3px 3px 5px black;
 }
 
 .countdown{
-font-size:30px;
-color:yellow;
+font-size:35px;
+color:#FFD700;
+margin-top:10px;
 }
 
 /* RUNNING TEXT */
@@ -80,10 +84,24 @@ color:yellow;
 position:fixed;
 bottom:0;
 width:100%;
-background:red;
+background:linear-gradient(90deg,#ff0000,#ff7300);
 padding:10px;
-font-size:24px;
+font-size:25px;
+white-space:nowrap;
+overflow:hidden;
 }
+
+.running span{
+display:inline-block;
+padding-left:100%;
+animation:runtext 15s linear infinite;
+}
+
+@keyframes runtext{
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
+}
+
 </style>
 
 </head>
@@ -91,8 +109,8 @@ font-size:24px;
 <body>
 
 <div class="header">
-<div class="namaMasjid">MASJID AZ ZAMZAM</div>
-<div class="alamat">Jl. Contoh Alamat Masjid</div>
+<div class="namaMasjid">MASJID AL BAROKAH</div>
+<div class="tanggal" id="tanggal"></div>
 </div>
 
 <div class="container">
@@ -100,95 +118,9 @@ font-size:24px;
 <!-- SIDEBAR -->
 <div class="sidebar">
 
-<div class="sholat">Subuh <div class="waktu" id="subuh"></div></div>
-<div class="sholat">Dzuhur <div class="waktu" id="dzuhur"></div></div>
-<div class="sholat">Ashar <div class="waktu" id="ashar"></div></div>
-<div class="sholat">Maghrib <div class="waktu" id="maghrib"></div></div>
-<div class="sholat">Isya <div class="waktu" id="isya"></div></div>
-
+<div class="sholat subuh">Subuh
+<div class="waktu" id="subuh"></div>
 </div>
 
-<!-- JAM UTAMA -->
-<div class="main">
-
-<div class="clock" id="clock"></div>
-<div class="tanggal" id="tanggal"></div>
-<div class="countdown" id="countdown"></div>
-
-</div>
-
-</div>
-
-<div class="running">
-Mohon matikan HP saat sholat | Ikuti kajian rutin setiap Jumat
-</div>
-
-<script>
-
-/* JAM REALTIME */
-function updateClock(){
-let now = new Date();
-
-document.getElementById("clock").innerHTML =
-now.toLocaleTimeString("id-ID");
-
-document.getElementById("tanggal").innerHTML =
-now.toLocaleDateString("id-ID",{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-
-cekCountdown();
-}
-
-setInterval(updateClock,1000);
-
-/* AMBIL JADWAL SHOLAT */
-let jadwal = {};
-
-fetch("https://api.aladhan.com/v1/timingsByCity?city=Bandung&country=Indonesia&method=11")
-.then(res => res.json())
-.then(data => {
-
-jadwal = data.data.timings;
-
-subuh.innerHTML = jadwal.Fajr;
-dzuhur.innerHTML = jadwal.Dhuhr;
-ashar.innerHTML = jadwal.Asr;
-maghrib.innerHTML = jadwal.Maghrib;
-isya.innerHTML = jadwal.Isha;
-
-});
-
-/* COUNTDOWN IQOMAH */
-let iqomah = 10; // menit
-
-function cekCountdown(){
-
-let now = new Date();
-let menitSekarang = now.getHours()*60 + now.getMinutes();
-
-for(let nama in jadwal){
-
-let waktu = jadwal[nama];
-if(!waktu) continue;
-
-let split = waktu.split(":");
-let menitAdzan = parseInt(split[0])*60 + parseInt(split[1]);
-
-if(menitSekarang >= menitAdzan && menitSekarang <= menitAdzan + iqomah){
-
-let sisa = (menitAdzan + iqomah) - menitSekarang;
-
-countdown.innerHTML =
-"Iqomah dalam " + sisa + " menit";
-
-return;
-}
-}
-
-countdown.innerHTML = "";
-
-}
-
-</script>
-
-</body>
-</html>
+<div class="sholat dzuhur">Dzuhur
+<div class="waktu" id="dzuhur"
