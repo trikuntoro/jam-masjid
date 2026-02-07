@@ -6,24 +6,20 @@
 
 <style>
 
+/* BACKGROUND FOTO MASJID */
 body{
 margin:0;
 font-family:Arial;
 color:white;
-background:url("Masjid.jpg") no-repeat center;
-background-size:cover;
-}
 
-/* EFEK GELAP AGAR TULISAN JELAS */
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-z-index:-1;
+/* Background + overlay gelap supaya tulisan jelas */
+background:
+linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+url("https://raw.githubusercontent.com/trikuntoro/jam-masjid/main/Masjid.jpg");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
 }
 
 /* HEADER */
@@ -82,7 +78,7 @@ align-items:center;
 .clock{
 font-size:130px;
 font-weight:bold;
-text-shadow:3px 3px 5px black;
+text-shadow:3px 3px 10px black;
 }
 
 .countdown{
@@ -115,7 +111,6 @@ animation:runtext 15s linear infinite;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -166,7 +161,7 @@ animation:runtext 15s linear infinite;
 
 <script>
 
-/* JAM + TANGGAL BERJALAN */
+/* JAM + TANGGAL */
 function updateClock(){
 
 let now = new Date();
@@ -175,9 +170,10 @@ let jam = now.getHours().toString().padStart(2,"0");
 let menit = now.getMinutes().toString().padStart(2,"0");
 let detik = now.getSeconds().toString().padStart(2,"0");
 
-clock.innerHTML = jam + ":" + menit + ":" + detik;
+document.getElementById("clock").innerHTML =
+jam + ":" + menit + ":" + detik;
 
-tanggal.innerHTML =
+document.getElementById("tanggal").innerHTML =
 now.toLocaleDateString("id-ID",
 {weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
@@ -196,11 +192,11 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Semarang&country=Indonesia&
 
 jadwal = data.data.timings;
 
-subuh.innerHTML = jadwal.Fajr;
-dzuhur.innerHTML = jadwal.Dhuhr;
-ashar.innerHTML = jadwal.Asr;
-maghrib.innerHTML = jadwal.Maghrib;
-isya.innerHTML = jadwal.Isha;
+document.getElementById("subuh").innerHTML = jadwal.Fajr;
+document.getElementById("dzuhur").innerHTML = jadwal.Dhuhr;
+document.getElementById("ashar").innerHTML = jadwal.Asr;
+document.getElementById("maghrib").innerHTML = jadwal.Maghrib;
+document.getElementById("isya").innerHTML = jadwal.Isha;
 
 });
 
@@ -225,14 +221,14 @@ if(sekarang >= adzan && sekarang <= adzan + waktuIqomah){
 
 let sisa = (adzan + waktuIqomah) - sekarang;
 
-countdown.innerHTML =
+document.getElementById("countdown").innerHTML =
 "IQOMAH " + nama + " " + sisa + " MENIT";
 
 return;
 }
 }
 
-countdown.innerHTML = "";
+document.getElementById("countdown").innerHTML = "";
 
 }
 
