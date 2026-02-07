@@ -2,78 +2,114 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Jam Masjid Modern</title>
+<title>Jam Digital Masjid</title>
 
 <style>
 
+/* BACKGROUND MASJID */
 body{
 margin:0;
-font-family:Segoe UI;
+font-family:Arial;
 color:white;
-overflow:hidden;
 
-/* FOTO MASJID FULL */
 background:
-linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),
+linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
 url("https://raw.githubusercontent.com/trikuntoro/jam-masjid/main/Masjid.jpg");
 
-background-size:contain;
-background-repeat:no-repeat;
-background-position:center;
-background-color:black;
+background-size:cover;
+
+/* POSISI FOTO FULL MASJID */
+background-position:center 60%;
+
+background-attachment:fixed;
 }
 
 /* HEADER */
 .header{
-display:flex;
-justify-content:space-between;
-padding:20px 40px;
-background:rgba(255,255,255,0.85);
-color:black;
-}
-
-.jamKecil{
-font-size:70px;
-font-weight:bold;
+background:linear-gradient(90deg,#00416A,#799F0C);
+padding:10px;
+text-align:center;
 }
 
 .namaMasjid{
-text-align:center;
-font-size:30px;
+font-size:40px;
 font-weight:bold;
 }
 
 .tanggal{
-text-align:right;
-font-size:18px;
+font-size:20px;
 }
 
-/* PANEL BAWAH */
-.panel{
-position:absolute;
-bottom:0;
-width:100%;
+/* LAYOUT */
+.container{
 display:flex;
-background:rgba(255,255,255,0.9);
-color:black;
+height:90vh;
 }
 
-.item{
-flex:1;
-text-align:center;
-padding:15px;
-border-right:1px solid #ddd;
+/* SIDEBAR */
+.sidebar{
+width:230px;
 }
 
-.item span{
-display:block;
-font-size:35px;
+/* WARNA SHOLAT */
+.subuh{background:#00A8FF;}
+.dzuhur{background:#FBC531;}
+.ashar{background:#8E44AD;}
+.maghrib{background:#E67E22;}
+.isya{background:#2C3E50;}
+
+.sholat{
+padding:18px;
+font-size:22px;
+}
+
+.waktu{
+font-size:32px;
 font-weight:bold;
 }
 
-.active{
-background:#f39c12;
-color:white;
+/* JAM UTAMA */
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.clock{
+font-size:130px;
+font-weight:bold;
+text-shadow:3px 3px 10px black;
+}
+
+.countdown{
+font-size:35px;
+color:#FFD700;
+margin-top:10px;
+}
+
+/* RUNNING TEXT */
+.running{
+position:fixed;
+bottom:0;
+width:100%;
+background:linear-gradient(90deg,#ff0000,#ff7300);
+padding:10px;
+font-size:25px;
+white-space:nowrap;
+overflow:hidden;
+}
+
+.running span{
+display:inline-block;
+padding-left:100%;
+animation:runtext 15s linear infinite;
+}
+
+@keyframes runtext{
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
 }
 
 </style>
@@ -82,110 +118,106 @@ color:white;
 <body>
 
 <div class="header">
-
-<div class="jamKecil" id="jam"></div>
-
-<div class="namaMasjid">
-MASJID IRSYADUL IBAD
-<br>
-<span style="font-size:18px;">Pasir Pengaraian - Rokan Hulu</span>
-</div>
-
+<div class="namaMasjid">MASJID IRSYADUL IBAD</div>
 <div class="tanggal" id="tanggal"></div>
+</div>
+
+<div class="container">
+
+<div class="sidebar">
+
+<div class="sholat subuh">Subuh
+<div class="waktu" id="subuh">05:11</div>
+</div>
+
+<div class="sholat dzuhur">Dzuhur
+<div class="waktu" id="dzuhur">12:33</div>
+</div>
+
+<div class="sholat ashar">Ashar
+<div class="waktu" id="ashar">15:54</div>
+</div>
+
+<div class="sholat maghrib">Maghrib
+<div class="waktu" id="maghrib">18:36</div>
+</div>
+
+<div class="sholat isya">Isya
+<div class="waktu" id="isya">19:47</div>
+</div>
 
 </div>
 
-<div class="panel">
-
-<div class="item" id="subuh">
-Subuh
-<span>05:11</span>
+<div class="main">
+<div class="clock" id="clock"></div>
+<div class="countdown" id="countdown"></div>
 </div>
 
-<div class="item" id="dzuhur">
-Dzuhur
-<span>12:33</span>
 </div>
 
-<div class="item" id="ashar">
-Ashar
-<span>15:54</span>
-</div>
-
-<div class="item" id="maghrib">
-Maghrib
-<span>18:36</span>
-</div>
-
-<div class="item" id="isya">
-Isya
-<span>19:47</span>
-</div>
-
+<div class="running">
+<span>Selamat datang di Masjid | Mohon matikan HP saat sholat | Ikuti kajian rutin setiap Jumat</span>
 </div>
 
 <script>
 
-/* JAM + DETIK */
-function updateJam(){
+/* JAM + TANGGAL */
+function updateClock(){
 
 let now = new Date();
 
 let jam = now.getHours().toString().padStart(2,"0");
 let menit = now.getMinutes().toString().padStart(2,"0");
-let detik = now.getSeconds().toString().padStart(2 confirms "0");
+let detik = now.getSeconds().toString().padStart(2,"0");
 
-document.getElementById("jam").innerHTML =
+document.getElementById("clock").innerHTML =
 jam + ":" + menit + ":" + detik;
 
 document.getElementById("tanggal").innerHTML =
 now.toLocaleDateString("id-ID",
 {weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-highlightWaktu();
-
+cekIqomah();
 }
 
-setInterval(updateJam,1000);
+setInterval(updateClock,1000);
 
 
-/* JADWAL */
+/* JADWAL SHOLAT */
 let jadwal = {
-subuh:"05:11",
-dzuhur:"12:33",
-ashar:"15:54",
-maghrib:"18:36",
-isya:"19:47"
+Subuh:"05:11",
+Dzuhur:"12:33",
+Ashar:"15:54",
+Maghrib:"18:36",
+Isya:"19:47"
 };
 
+/* IQOMAH 10 MENIT */
+let waktuIqomah = 10;
 
-/* HIGHLIGHT SHOLAT */
-function highlightWaktu(){
+function cekIqomah(){
 
 let now = new Date();
-let menitSekarang = now.getHours()*60 + now.getMinutes();
+let sekarang = now.getHours()*60 + now.getMinutes();
 
 for(let nama in jadwal){
 
 let waktu = jadwal[nama];
 let p = waktu.split(":");
+let adzan = parseInt(p[0])*60 + parseInt(p[1]);
 
-let menitSholat = parseInt(p[0])*60 + parseInt(p[1]);
+if(sekarang >= adzan && sekarang <= adzan + waktuIqomah){
 
-let element = document.getElementById(nama);
+let sisa = (adzan + waktuIqomah) - sekarang;
 
-if(menitSekarang >= menitSholat &&
-menitSekarang <= menitSholat + 10){
+document.getElementById("countdown").innerHTML =
+"IQOMAH " + nama + " " + sisa + " MENIT";
 
-element.classList.add("active");
-
-}else{
-
-element.classList.remove("active");
-
+return;
+}
 }
 
-}
+document.getElementById("countdown").innerHTML = "";
 
 }
 
