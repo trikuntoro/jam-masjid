@@ -10,8 +10,20 @@ body{
 margin:0;
 font-family:Arial;
 color:white;
-background:url("https://images.unsplash.com/photo-1591608511731-0fce8e0c2e4b") no-repeat center;
+background:url("Masjid.jpg") no-repeat center;
 background-size:cover;
+}
+
+/* EFEK GELAP AGAR TULISAN JELAS */
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+z-index:-1;
 }
 
 /* HEADER */
@@ -194,7 +206,7 @@ isya.innerHTML = jadwal.Isha;
 
 
 /* COUNTDOWN IQOMAH */
-let waktuIqomah = 10; // menit
+let waktuIqomah = 10;
 
 function cekIqomah(){
 
