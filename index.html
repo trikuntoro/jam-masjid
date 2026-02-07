@@ -6,20 +6,20 @@
 
 <style>
 
-/* BACKGROUND FOTO MASJID */
+/* BACKGROUND MASJID */
 body{
 margin:0;
 font-family:Arial;
 color:white;
 
 background:
-linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
 url("https://raw.githubusercontent.com/trikuntoro/jam-masjid/main/Masjid.jpg");
 
 background-size:cover;
 
-/* POSISI GAMBAR NAIK KE ATAS */
-background-position:center 25%;
+/* POSISI FOTO FULL MASJID */
+background-position:center 60%;
 
 background-attachment:fixed;
 }
@@ -51,7 +51,7 @@ height:90vh;
 width:230px;
 }
 
-/* WARNA TIAP SHOLAT */
+/* WARNA SHOLAT */
 .subuh{background:#00A8FF;}
 .dzuhur{background:#FBC531;}
 .ashar{background:#8E44AD;}
@@ -124,32 +124,30 @@ animation:runtext 15s linear infinite;
 
 <div class="container">
 
-<!-- SIDEBAR -->
 <div class="sidebar">
 
 <div class="sholat subuh">Subuh
-<div class="waktu" id="subuh"></div>
+<div class="waktu" id="subuh">05:11</div>
 </div>
 
 <div class="sholat dzuhur">Dzuhur
-<div class="waktu" id="dzuhur"></div>
+<div class="waktu" id="dzuhur">12:33</div>
 </div>
 
 <div class="sholat ashar">Ashar
-<div class="waktu" id="ashar"></div>
+<div class="waktu" id="ashar">15:54</div>
 </div>
 
 <div class="sholat maghrib">Maghrib
-<div class="waktu" id="maghrib"></div>
+<div class="waktu" id="maghrib">18:36</div>
 </div>
 
 <div class="sholat isya">Isya
-<div class="waktu" id="isya"></div>
+<div class="waktu" id="isya">19:47</div>
 </div>
 
 </div>
 
-<!-- JAM -->
 <div class="main">
 <div class="clock" id="clock"></div>
 <div class="countdown" id="countdown"></div>
@@ -185,25 +183,16 @@ cekIqomah();
 setInterval(updateClock,1000);
 
 
-/* AMBIL JADWAL SHOLAT PASIR PENGARAIAN */
-let jadwal = {};
+/* JADWAL SHOLAT */
+let jadwal = {
+Subuh:"05:11",
+Dzuhur:"12:33",
+Ashar:"15:54",
+Maghrib:"18:36",
+Isya:"19:47"
+};
 
-fetch("https://api.aladhan.com/v1/timingsByCity?city=Pasir%20Pengaraian&country=Indonesia&method=11")
-.then(res=>res.json())
-.then(data=>{
-
-jadwal = data.data.timings;
-
-document.getElementById("subuh").innerHTML = jadwal.Fajr;
-document.getElementById("dzuhur").innerHTML = jadwal.Dhuhr;
-document.getElementById("ashar").innerHTML = jadwal.Asr;
-document.getElementById("maghrib").innerHTML = jadwal.Maghrib;
-document.getElementById("isya").innerHTML = jadwal.Isha;
-
-});
-
-
-/* COUNTDOWN IQOMAH */
+/* IQOMAH 10 MENIT */
 let waktuIqomah = 10;
 
 function cekIqomah(){
@@ -211,19 +200,9 @@ function cekIqomah(){
 let now = new Date();
 let sekarang = now.getHours()*60 + now.getMinutes();
 
-let mapping = {
-Fajr:"Subuh",
-Dhuhr:"Dzuhur",
-Asr:"Ashar",
-Maghrib:"Maghrib",
-Isha:"Isya"
-};
-
-for(let nama in mapping){
+for(let nama in jadwal){
 
 let waktu = jadwal[nama];
-if(!waktu) continue;
-
 let p = waktu.split(":");
 let adzan = parseInt(p[0])*60 + parseInt(p[1]);
 
@@ -232,7 +211,7 @@ if(sekarang >= adzan && sekarang <= adzan + waktuIqomah){
 let sisa = (adzan + waktuIqomah) - sekarang;
 
 document.getElementById("countdown").innerHTML =
-"IQOMAH " + mapping[nama] + " " + sisa + " MENIT";
+"IQOMAH " + nama + " " + sisa + " MENIT";
 
 return;
 }
