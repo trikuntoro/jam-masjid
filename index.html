@@ -17,27 +17,37 @@ linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
 url("https://raw.githubusercontent.com/trikuntoro/jam-masjid/main/Masjid.jpg");
 
 background-size:cover;
-
-/* POSISI FOTO FULL MASJID */
 background-position:center 60%;
-
 background-attachment:fixed;
 }
 
-/* HEADER */
+/* HEADER FLEX */
 .header{
+display:flex;
+align-items:center;
+justify-content:space-between;
 background:linear-gradient(90deg,#00416A,#799F0C);
-padding:10px;
-text-align:center;
+padding:10px 25px;
 }
 
+/* NAMA MASJID */
 .namaMasjid{
-font-size:40px;
+font-size:38px;
 font-weight:bold;
+text-align:center;
+flex:1;
 }
 
+/* TANGGAL */
 .tanggal{
-font-size:20px;
+font-size:18px;
+}
+
+/* JAM DI HEADER */
+.jamHeader{
+font-size:45px;
+font-weight:bold;
+text-shadow:2px 2px 5px black;
 }
 
 /* LAYOUT */
@@ -68,25 +78,19 @@ font-size:32px;
 font-weight:bold;
 }
 
-/* JAM UTAMA */
+/* BAGIAN TENGAH */
 .main{
 flex:1;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
 }
 
-.clock{
-font-size:130px;
-font-weight:bold;
-text-shadow:3px 3px 10px black;
-}
-
+/* COUNTDOWN */
 .countdown{
-font-size:35px;
+font-size:45px;
 color:#FFD700;
-margin-top:10px;
+text-shadow:3px 3px 10px black;
 }
 
 /* RUNNING TEXT */
@@ -118,8 +122,15 @@ animation:runtext 15s linear infinite;
 <body>
 
 <div class="header">
-<div class="namaMasjid">MASJID IRSYADUL IBAD</div>
+
 <div class="tanggal" id="tanggal"></div>
+
+<div class="namaMasjid">
+MASJID IRSYADUL IBAD
+</div>
+
+<div class="jamHeader" id="clock"></div>
+
 </div>
 
 <div class="container">
@@ -127,29 +138,28 @@ animation:runtext 15s linear infinite;
 <div class="sidebar">
 
 <div class="sholat subuh">Subuh
-<div class="waktu" id="subuh">05:11</div>
+<div class="waktu">05:11</div>
 </div>
 
 <div class="sholat dzuhur">Dzuhur
-<div class="waktu" id="dzuhur">12:33</div>
+<div class="waktu">12:33</div>
 </div>
 
 <div class="sholat ashar">Ashar
-<div class="waktu" id="ashar">15:54</div>
+<div class="waktu">15:54</div>
 </div>
 
 <div class="sholat maghrib">Maghrib
-<div class="waktu" id="maghrib">18:36</div>
+<div class="waktu">18:36</div>
 </div>
 
 <div class="sholat isya">Isya
-<div class="waktu" id="isya">19:47</div>
+<div class="waktu">19:47</div>
 </div>
 
 </div>
 
 <div class="main">
-<div class="clock" id="clock"></div>
 <div class="countdown" id="countdown"></div>
 </div>
 
