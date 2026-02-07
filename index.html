@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jam Masjid</title>
+
+<style>
+body {
+    background:black;
+    color:lime;
+    text-align:center;
+    font-family:Arial;
+}
+
+#clock {
+    font-size:80px;
+    margin-top:150px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>JAM MASJID</h1>
+<div id="clock"></div>
+
+<script>
+function updateClock(){
+    let now = new Date();
+    let time = now.toLocaleTimeString();
+    document.getElementById("clock").innerHTML = time;
+}
+
+setInterval(updateClock,1000);
+updateClock();
+</script>
+
+</body>
+</html>
