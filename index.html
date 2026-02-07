@@ -123,4 +123,108 @@ animation:runtext 15s linear infinite;
 </div>
 
 <div class="sholat dzuhur">Dzuhur
-<div class="waktu" id="dzuhur"
+<div class="waktu" id="dzuhur"></div>
+</div>
+
+<div class="sholat ashar">Ashar
+<div class="waktu" id="ashar"></div>
+</div>
+
+<div class="sholat maghrib">Maghrib
+<div class="waktu" id="maghrib"></div>
+</div>
+
+<div class="sholat isya">Isya
+<div class="waktu" id="isya"></div>
+</div>
+
+</div>
+
+<!-- JAM -->
+<div class="main">
+<div class="clock" id="clock"></div>
+<div class="countdown" id="countdown"></div>
+</div>
+
+</div>
+
+<div class="running">
+<span>Selamat datang di Masjid | Mohon matikan HP saat sholat | Ikuti kajian rutin setiap Jumat</span>
+</div>
+
+<script>
+
+/* JAM + TANGGAL BERJALAN */
+function updateClock(){
+
+let now = new Date();
+
+let jam = now.getHours().toString().padStart(2,"0");
+let menit = now.getMinutes().toString().padStart(2,"0");
+let detik = now.getSeconds().toString().padStart(2,"0");
+
+clock.innerHTML = jam + ":" + menit + ":" + detik;
+
+tanggal.innerHTML =
+now.toLocaleDateString("id-ID",
+{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+cekIqomah();
+}
+
+setInterval(updateClock,1000);
+
+
+/* AMBIL JADWAL SHOLAT */
+let jadwal = {};
+
+fetch("https://api.aladhan.com/v1/timingsByCity?city=Semarang&country=Indonesia&method=11")
+.then(res=>res.json())
+.then(data=>{
+
+jadwal = data.data.timings;
+
+subuh.innerHTML = jadwal.Fajr;
+dzuhur.innerHTML = jadwal.Dhuhr;
+ashar.innerHTML = jadwal.Asr;
+maghrib.innerHTML = jadwal.Maghrib;
+isya.innerHTML = jadwal.Isha;
+
+});
+
+
+/* COUNTDOWN IQOMAH */
+let waktuIqomah = 10; // menit
+
+function cekIqomah(){
+
+let now = new Date();
+let sekarang = now.getHours()*60 + now.getMinutes();
+
+for(let nama in jadwal){
+
+let waktu = jadwal[nama];
+if(!waktu) continue;
+
+let p = waktu.split(":");
+let adzan = parseInt(p[0])*60 + parseInt(p[1]);
+
+if(sekarang >= adzan && sekarang <= adzan + waktuIqomah){
+
+let sisa = (adzan + waktuIqomah) - sekarang;
+
+countdown.innerHTML =
+"IQOMAH " + nama + " " + sisa + " MENIT";
+
+return;
+}
+}
+
+countdown.innerHTML = "";
+
+}
+
+</script>
+
+</body>
+</html>
