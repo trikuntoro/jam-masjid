@@ -2,131 +2,137 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jam Masjid LED</title>
 
 <style>
 
-body{
+*{
+box-sizing:border-box;
 margin:0;
-font-family:Arial;
+padding:0;
+}
+
+body{
+font-family:Arial, sans-serif;
 color:white;
 
-/* BACKGROUND MASJID + ORNAMEN */
 background:
-linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
 url("https://raw.githubusercontent.com/trikuntoro/jam-masjid/main/Masjid.jpg");
 
 background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
-height:100vh;
-overflow:hidden;
+min-height:100vh;
+overflow-x:hidden;
 }
 
-/* ORNAMEN ISLAM */
+/* ORNAMEN */
 body::before{
 content:"";
 position:fixed;
 width:100%;
 height:100%;
 background-image:url("https://www.transparenttextures.com/patterns/arabesque.png");
-opacity:0.2;
+opacity:0.15;
 pointer-events:none;
 }
 
 /* HEADER */
 .header{
 display:flex;
+flex-wrap:wrap;
 justify-content:space-between;
 align-items:center;
-padding:15px 30px;
-
+padding:15px 20px;
 background:linear-gradient(90deg,#00c6ff,#0072ff);
 box-shadow:0 0 20px #00eaff;
+text-align:center;
 }
 
 .namaMasjid{
-font-size:38px;
+font-size:28px;
 font-weight:bold;
-text-shadow:0 0 15px cyan;
+text-shadow:0 0 10px cyan;
 }
 
 .tanggal{
-font-size:18px;
+font-size:14px;
+margin-top:5px;
 }
 
-/* JAM HEADER */
 .clockHeader{
-font-size:45px;
+font-size:28px;
 font-weight:bold;
-color:#fff;
-text-shadow:0 0 20px yellow;
+text-shadow:0 0 15px yellow;
 }
 
 /* LAYOUT */
 .container{
 display:flex;
-height:85vh;
+flex-wrap:wrap;
+width:100%;
 }
 
 /* SIDEBAR */
 .sidebar{
-width:240px;
 display:flex;
 flex-direction:column;
+width:220px;
 }
 
-/* WARNA SHOLAT CERAH */
+.sholat{
+padding:15px;
+font-size:18px;
+border-bottom:2px solid rgba(255,255,255,0.3);
+}
+
+.waktu{
+font-size:26px;
+font-weight:bold;
+}
+
+/* WARNA */
 .subuh{background:#00A8FF;}
 .dzuhur{background:#FBC531;}
 .ashar{background:#9C27B0;}
 .maghrib{background:#FF5722;}
 .isya{background:#34495E;}
 
-.sholat{
-padding:20px;
-font-size:24px;
-border-bottom:2px solid rgba(255,255,255,0.3);
-}
-
-.waktu{
-font-size:34px;
-font-weight:bold;
-text-shadow:0 0 15px white;
-}
-
-/* AREA TENGAH */
+/* MAIN */
 .main{
 flex:1;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+padding:20px;
+min-height:60vh;
 }
 
-/* JAM BESAR */
 .clock{
-font-size:140px;
+font-size:100px;
 font-weight:bold;
-text-shadow:0 0 25px white;
+text-shadow:0 0 20px white;
+text-align:center;
 }
 
-/* IQOMAH */
 .countdown{
-font-size:40px;
+font-size:28px;
 color:yellow;
-text-shadow:0 0 15px orange;
-margin-top:15px;
+margin-top:10px;
+text-align:center;
 }
 
 /* RUNNING TEXT */
 .running{
-position:absolute;
+position:fixed;
 bottom:0;
 width:100%;
 background:linear-gradient(90deg,#ff0000,#ff8c00);
-padding:12px;
-font-size:26px;
+padding:10px;
+font-size:18px;
 overflow:hidden;
 }
 
@@ -141,69 +147,85 @@ animation:run 15s linear infinite;
 100%{transform:translateX(-100%);}
 }
 
+/* ========================= */
+/* RESPONSIVE HP */
+/* ========================= */
+@media(max-width:768px){
+
+.header{
+flex-direction:column;
+}
+
+.sidebar{
+flex-direction:row;
+flex-wrap:wrap;
+width:100%;
+}
+
+.sholat{
+flex:1 1 50%;
+font-size:14px;
+text-align:center;
+}
+
+.waktu{
+font-size:20px;
+}
+
+.clock{
+font-size:60px;
+}
+
+.clockHeader{
+font-size:22px;
+}
+
+.namaMasjid{
+font-size:20px;
+}
+
+.countdown{
+font-size:20px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-
 <div>
 <div class="namaMasjid">MASJID IRSYADUL IBAD</div>
 <div class="tanggal" id="tanggal"></div>
 </div>
-
 <div class="clockHeader" id="clockHeader"></div>
-
 </div>
 
-<!-- LAYOUT -->
 <div class="container">
 
-<!-- SIDEBAR -->
 <div class="sidebar">
-
-<div class="sholat subuh">Subuh
-<div class="waktu">05:11</div>
+<div class="sholat subuh">Subuh<div class="waktu">05:11</div></div>
+<div class="sholat dzuhur">Dzuhur<div class="waktu">12:33</div></div>
+<div class="sholat ashar">Ashar<div class="waktu">15:54</div></div>
+<div class="sholat maghrib">Maghrib<div class="waktu">18:36</div></div>
+<div class="sholat isya">Isya<div class="waktu">19:47</div></div>
 </div>
 
-<div class="sholat dzuhur">Dzuhur
-<div class="waktu">12:33</div>
-</div>
-
-<div class="sholat ashar">Ashar
-<div class="waktu">15:54</div>
-</div>
-
-<div class="sholat maghrib">Maghrib
-<div class="waktu">18:36</div>
-</div>
-
-<div class="sholat isya">Isya
-<div class="waktu">19:47</div>
-</div>
-
-</div>
-
-<!-- AREA JAM BESAR -->
 <div class="main">
-
 <div class="clock" id="clock"></div>
 <div class="countdown" id="countdown"></div>
-
 </div>
 
 </div>
 
-<!-- RUNNING TEXT -->
 <div class="running">
 <span>Selamat datang di Masjid | Mohon matikan HP saat sholat | Ikuti kajian rutin setiap Jumat</span>
 </div>
 
 <script>
 
-/* JAM */
 function updateClock(){
 
 let now = new Date();
@@ -226,7 +248,6 @@ cekIqomah();
 
 setInterval(updateClock,1000);
 
-/* JADWAL */
 let jadwal = {
 Subuh:"05:11",
 Dzuhur:"12:33",
@@ -237,7 +258,6 @@ Isya:"19:47"
 
 let iqomah = 10;
 
-/* HITUNG IQOMAH */
 function cekIqomah(){
 
 let now = new Date();
@@ -262,6 +282,8 @@ return;
 document.getElementById("countdown").innerHTML = "";
 
 }
+
+updateClock();
 
 </script>
 
