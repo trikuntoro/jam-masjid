@@ -3,67 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jam Masjid LED</title>
+<title>Jam Masjid LED Ramadhan 2026</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:Arial;color:#00ffcc;overflow:hidden;}
 
-html,body{
-height:100%;
-font-family:Arial, sans-serif;
-color:white;
-overflow:hidden;
-}
-
-/* BACKGROUND */
 body{
 background:
-linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-url("https://raw.githubusercontent.com/trikuntoro/jam-masjid/main/Masjid.jpg");
+linear-gradient(rgba(0,40,20,0.85), rgba(0,40,20,0.85)),
+url("https://images.unsplash.com/photo-1585032226651-759b368d7246");
 background-size:cover;
 background-position:center;
-background-repeat:no-repeat;
 }
 
-/* HEADER */
-.header{
+/* ================= BULAN SABIT ================= */
+.moon{
+position:absolute;
+top:60px;
+right:120px;
+width:120px;
+height:120px;
+background:#00ffcc;
+border-radius:50%;
+box-shadow:0 0 40px #00ff99;
+}
+
+.moon::after{
+content:"";
+position:absolute;
+top:0;
+left:35px;
+width:120px;
+height:120px;
+background:#003322;
+border-radius:50%;
+}
+
+/* ================= LENTERA ================= */
+.lantern{
+position:absolute;
+top:0;
+width:50px;
 height:80px;
+background:linear-gradient(#00cc66,#00994d);
+border-radius:10px;
+box-shadow:0 0 20px #00ff99;
+animation:ayun 3s ease-in-out infinite alternate;
+}
+
+.lantern::before{
+content:"";
+position:absolute;
+top:-20px;
+left:50%;
+width:4px;
+height:20px;
+background:#00ffcc;
+transform:translateX(-50%);
+}
+
+.lantern::after{
+content:"";
+position:absolute;
+bottom:10px;
+left:50%;
+width:20px;
+height:20px;
+background:yellow;
+border-radius:50%;
+transform:translateX(-50%);
+box-shadow:0 0 20px yellow;
+}
+
+.l1{left:80px;}
+.l2{right:80px;animation-delay:1s;}
+
+@keyframes ayun{
+0%{transform:rotate(-5deg);}
+100%{transform:rotate(5deg);}
+}
+
+/* ================= HEADER ================= */
+.header{
+height:85px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:0 30px;
-background:linear-gradient(90deg,#00c6ff,#0072ff);
-box-shadow:0 0 15px #00eaff;
+background:linear-gradient(90deg,#004d2b,#009966);
+box-shadow:0 0 25px #00ff99;
 }
 
-.nama{
-font-size:28px;
-font-weight:bold;
-}
+.nama{font-size:28px;font-weight:bold;text-shadow:0 0 10px #00ff99;}
+.tanggal{font-size:14px;color:#aaffdd;}
+.jamKecil{font-size:34px;font-weight:bold;text-shadow:0 0 15px #00ffcc;}
 
-.tanggal{
-font-size:14px;
-margin-top:5px;
-}
+/* ================= LAYOUT ================= */
+.wrapper{display:flex;height:calc(100vh - 125px);}
 
-.jamKecil{
-font-size:32px;
-font-weight:bold;
-}
-
-/* LAYOUT */
-.wrapper{
-display:flex;
-height:calc(100vh - 120px); /* header + running */
-}
-
-/* SIDEBAR */
 .sidebar{
-width:220px;
+width:230px;
 display:flex;
 flex-direction:column;
 }
@@ -75,22 +115,18 @@ flex-direction:column;
 justify-content:center;
 padding-left:20px;
 font-size:18px;
-border-bottom:1px solid rgba(255,255,255,0.3);
+color:white;
+border-bottom:1px solid rgba(255,255,255,0.2);
 }
 
-.waktu{
-font-size:28px;
-font-weight:bold;
-margin-top:5px;
-}
+.waktu{font-size:28px;font-weight:bold;margin-top:5px;}
 
-.subuh{background:#00A8FF;}
-.dzuhur{background:#FBC531;}
-.ashar{background:#9C27B0;}
-.maghrib{background:#FF5722;}
-.isya{background:#34495E;}
+.subuh{background:#006644;}
+.dzuhur{background:#008055;}
+.ashar{background:#009966;}
+.maghrib{background:#00b377;}
+.isya{background:#00cc88;}
 
-/* MAIN */
 .main{
 flex:1;
 display:flex;
@@ -100,18 +136,22 @@ flex-direction:column;
 }
 
 .jamBesar{
-font-size:120px;
+font-size:130px;
 font-weight:bold;
-text-shadow:0 0 30px white;
+text-shadow:
+0 0 10px #00ff99,
+0 0 30px #00ff99,
+0 0 60px #00ff66;
 }
 
 .countdown{
 font-size:30px;
-color:yellow;
 margin-top:15px;
+color:#ffff66;
+text-shadow:0 0 10px yellow;
 }
 
-/* RUNNING TEXT */
+/* ================= RUNNING TEXT ================= */
 .running{
 position:fixed;
 bottom:0;
@@ -120,15 +160,16 @@ width:100%;
 height:40px;
 display:flex;
 align-items:center;
-background:linear-gradient(90deg,#ff0000,#ff8c00);
+background:linear-gradient(90deg,#004d2b,#00cc66);
 overflow:hidden;
 font-size:18px;
+color:white;
 }
 
 .running span{
 white-space:nowrap;
 padding-left:100%;
-animation:jalan 20s linear infinite;
+animation:jalan 22s linear infinite;
 }
 
 @keyframes jalan{
@@ -136,20 +177,21 @@ animation:jalan 20s linear infinite;
 100%{transform:translateX(-100%);}
 }
 
-/* RESPONSIVE */
 @media(max-width:768px){
-.sidebar{
-width:150px;
-}
-.jamBesar{
-font-size:60px;
-}
+.sidebar{width:150px;}
+.jamBesar{font-size:60px;}
+.moon{width:70px;height:70px;right:40px;}
 }
 
 </style>
 </head>
 
 <body>
+
+<!-- ORNAMEN -->
+<div class="moon"></div>
+<div class="lantern l1"></div>
+<div class="lantern l2"></div>
 
 <div class="header">
 <div>
@@ -170,6 +212,7 @@ font-size:60px;
 </div>
 
 <div class="main">
+<div style="font-size:22px;color:#ffff99;margin-bottom:10px;">🌙 RAMADHAN 1447 H / 2026 M 🌙</div>
 <div class="jamBesar" id="jamBesar"></div>
 <div class="countdown" id="countdown"></div>
 </div>
@@ -177,32 +220,25 @@ font-size:60px;
 </div>
 
 <div class="running">
-<span>Selamat datang di Masjid | Mohon matikan HP saat sholat | Ikuti kajian rutin setiap Jumat</span>
+<span>Marhaban Ya Ramadhan 1447 H | Perbanyak ibadah dan sedekah | Mohon matikan HP saat sholat</span>
 </div>
 
 <script>
-
 function updateJam(){
 let now = new Date();
-
 let jam = now.getHours().toString().padStart(2,"0");
 let menit = now.getMinutes().toString().padStart(2,"0");
 let detik = now.getSeconds().toString().padStart(2,"0");
-
 let waktu = jam + ":" + menit + ":" + detik;
 
 document.getElementById("jamBesar").innerHTML = waktu;
 document.getElementById("jamKecil").innerHTML = waktu;
-
 document.getElementById("tanggal").innerHTML =
 now.toLocaleDateString("id-ID",
 {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-
 }
-
 setInterval(updateJam,1000);
 updateJam();
-
 </script>
 
 </body>
