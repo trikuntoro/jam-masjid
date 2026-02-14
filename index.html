@@ -3,62 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jam Masjid LED Ramadhan 2026</title>
+<title>Jam Masjid LED Elegan</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;font-family:Arial;color:#00ffcc;overflow:hidden;}
+html,body{
+height:100%;
+font-family:'Segoe UI',sans-serif;
+color:#eafff7;
+overflow:hidden;
+}
 
+/* ================= BACKGROUND ================= */
 body{
 background:
-linear-gradient(rgba(0,40,20,0.85), rgba(0,40,20,0.85)),
+linear-gradient(rgba(0,40,25,0.55), rgba(0,40,25,0.55)),
 url("https://images.unsplash.com/photo-1585032226651-759b368d7246");
 background-size:cover;
 background-position:center;
 }
 
-/* ================= BULAN SABIT ================= */
+/* ================= ORNAMEN ================= */
 .moon{
 position:absolute;
-top:60px;
-right:120px;
-width:120px;
-height:120px;
+top:70px;
+right:100px;
+width:90px;
+height:90px;
 background:#00ffcc;
 border-radius:50%;
-box-shadow:0 0 40px #00ff99;
+box-shadow:0 0 25px #00ff99;
+z-index:1;
+opacity:0.8;
 }
 
 .moon::after{
 content:"";
 position:absolute;
 top:0;
-left:35px;
-width:120px;
-height:120px;
-background:#003322;
+left:28px;
+width:90px;
+height:90px;
+background:rgba(0,40,25,0.8);
 border-radius:50%;
 }
 
-/* ================= LENTERA ================= */
+/* Lentera */
 .lantern{
 position:absolute;
 top:0;
-width:50px;
-height:80px;
-background:linear-gradient(#00cc66,#00994d);
-border-radius:10px;
-box-shadow:0 0 20px #00ff99;
-animation:ayun 3s ease-in-out infinite alternate;
+width:40px;
+height:70px;
+background:linear-gradient(#00cc88,#009966);
+border-radius:8px;
+box-shadow:0 0 15px #00ff99;
+animation:ayun 4s ease-in-out infinite alternate;
+z-index:1;
+opacity:0.9;
 }
 
 .lantern::before{
 content:"";
 position:absolute;
-top:-20px;
+top:-18px;
 left:50%;
-width:4px;
-height:20px;
+width:3px;
+height:18px;
 background:#00ffcc;
 transform:translateX(-50%);
 }
@@ -66,46 +76,67 @@ transform:translateX(-50%);
 .lantern::after{
 content:"";
 position:absolute;
-bottom:10px;
+bottom:8px;
 left:50%;
-width:20px;
-height:20px;
-background:yellow;
+width:16px;
+height:16px;
+background:#ffee88;
 border-radius:50%;
 transform:translateX(-50%);
-box-shadow:0 0 20px yellow;
+box-shadow:0 0 12px #ffee88;
 }
 
-.l1{left:80px;}
-.l2{right:80px;animation-delay:1s;}
+.l1{left:70px;}
+.l2{right:70px;animation-delay:1.5s;}
 
 @keyframes ayun{
-0%{transform:rotate(-5deg);}
-100%{transform:rotate(5deg);}
+0%{transform:rotate(-4deg);}
+100%{transform:rotate(4deg);}
 }
 
 /* ================= HEADER ================= */
 .header{
+position:relative;
+z-index:5;
 height:85px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:0 30px;
-background:linear-gradient(90deg,#004d2b,#009966);
-box-shadow:0 0 25px #00ff99;
+padding:0 40px;
+background:linear-gradient(90deg,#004d2b,#00a86b);
+box-shadow:0 0 15px rgba(0,255,150,0.4);
 }
 
-.nama{font-size:28px;font-weight:bold;text-shadow:0 0 10px #00ff99;}
-.tanggal{font-size:14px;color:#aaffdd;}
-.jamKecil{font-size:34px;font-weight:bold;text-shadow:0 0 15px #00ffcc;}
+.nama{
+font-size:26px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+.tanggal{
+font-size:14px;
+opacity:0.9;
+}
+
+.jamKecil{
+font-size:32px;
+font-weight:bold;
+}
 
 /* ================= LAYOUT ================= */
-.wrapper{display:flex;height:calc(100vh - 125px);}
+.wrapper{
+position:relative;
+z-index:5;
+display:flex;
+height:calc(100vh - 125px);
+}
 
 .sidebar{
-width:230px;
+width:220px;
 display:flex;
 flex-direction:column;
+backdrop-filter:blur(4px);
+background:rgba(0,80,50,0.65);
 }
 
 .box{
@@ -113,42 +144,45 @@ flex:1;
 display:flex;
 flex-direction:column;
 justify-content:center;
-padding-left:20px;
-font-size:18px;
-color:white;
-border-bottom:1px solid rgba(255,255,255,0.2);
+padding-left:25px;
+border-bottom:1px solid rgba(255,255,255,0.15);
 }
 
-.waktu{font-size:28px;font-weight:bold;margin-top:5px;}
+.box span{
+font-size:17px;
+opacity:0.9;
+}
 
-.subuh{background:#006644;}
-.dzuhur{background:#008055;}
-.ashar{background:#009966;}
-.maghrib{background:#00b377;}
-.isya{background:#00cc88;}
+.waktu{
+font-size:26px;
+font-weight:bold;
+margin-top:4px;
+}
 
+/* ================= MAIN ================= */
 .main{
 flex:1;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-flex-direction:column;
+text-align:center;
+}
+
+.judulRamadhan{
+font-size:20px;
+margin-bottom:15px;
+color:#ffee88;
+letter-spacing:1px;
 }
 
 .jamBesar{
-font-size:130px;
-font-weight:bold;
+font-size:120px;
+font-weight:800;
+color:#00ffcc;
 text-shadow:
-0 0 10px #00ff99,
-0 0 30px #00ff99,
-0 0 60px #00ff66;
-}
-
-.countdown{
-font-size:30px;
-margin-top:15px;
-color:#ffff66;
-text-shadow:0 0 10px yellow;
+0 0 8px rgba(0,255,200,0.6),
+0 0 20px rgba(0,255,150,0.4);
 }
 
 /* ================= RUNNING TEXT ================= */
@@ -160,16 +194,16 @@ width:100%;
 height:40px;
 display:flex;
 align-items:center;
-background:linear-gradient(90deg,#004d2b,#00cc66);
+background:linear-gradient(90deg,#004d2b,#00b377);
 overflow:hidden;
-font-size:18px;
-color:white;
+font-size:17px;
+z-index:10;
 }
 
 .running span{
 white-space:nowrap;
 padding-left:100%;
-animation:jalan 22s linear infinite;
+animation:jalan 25s linear infinite;
 }
 
 @keyframes jalan{
@@ -177,10 +211,12 @@ animation:jalan 22s linear infinite;
 100%{transform:translateX(-100%);}
 }
 
+/* ================= RESPONSIVE ================= */
 @media(max-width:768px){
 .sidebar{width:150px;}
 .jamBesar{font-size:60px;}
-.moon{width:70px;height:70px;right:40px;}
+.moon{display:none;}
+.lantern{display:none;}
 }
 
 </style>
@@ -188,7 +224,6 @@ animation:jalan 22s linear infinite;
 
 <body>
 
-<!-- ORNAMEN -->
 <div class="moon"></div>
 <div class="lantern l1"></div>
 <div class="lantern l2"></div>
@@ -204,17 +239,16 @@ animation:jalan 22s linear infinite;
 <div class="wrapper">
 
 <div class="sidebar">
-<div class="box subuh">Subuh<div class="waktu">05:11</div></div>
-<div class="box dzuhur">Dzuhur<div class="waktu">12:33</div></div>
-<div class="box ashar">Ashar<div class="waktu">15:54</div></div>
-<div class="box maghrib">Maghrib<div class="waktu">18:36</div></div>
-<div class="box isya">Isya<div class="waktu">19:47</div></div>
+<div class="box"><span>Subuh</span><div class="waktu">05:11</div></div>
+<div class="box"><span>Dzuhur</span><div class="waktu">12:33</div></div>
+<div class="box"><span>Ashar</span><div class="waktu">15:54</div></div>
+<div class="box"><span>Maghrib</span><div class="waktu">18:36</div></div>
+<div class="box"><span>Isya</span><div class="waktu">19:47</div></div>
 </div>
 
 <div class="main">
-<div style="font-size:22px;color:#ffff99;margin-bottom:10px;">🌙 RAMADHAN 1447 H / 2026 M 🌙</div>
+<div class="judulRamadhan">🌙 RAMADHAN 1447 H / 2026 M 🌙</div>
 <div class="jamBesar" id="jamBesar"></div>
-<div class="countdown" id="countdown"></div>
 </div>
 
 </div>
@@ -225,15 +259,15 @@ animation:jalan 22s linear infinite;
 
 <script>
 function updateJam(){
-let now = new Date();
-let jam = now.getHours().toString().padStart(2,"0");
-let menit = now.getMinutes().toString().padStart(2,"0");
-let detik = now.getSeconds().toString().padStart(2,"0");
-let waktu = jam + ":" + menit + ":" + detik;
+let now=new Date();
+let jam=now.getHours().toString().padStart(2,"0");
+let menit=now.getMinutes().toString().padStart(2,"0");
+let detik=now.getSeconds().toString().padStart(2,"0");
+let waktu=jam+":"+menit+":"+detik;
 
-document.getElementById("jamBesar").innerHTML = waktu;
-document.getElementById("jamKecil").innerHTML = waktu;
-document.getElementById("tanggal").innerHTML =
+document.getElementById("jamBesar").innerHTML=waktu;
+document.getElementById("jamKecil").innerHTML=waktu;
+document.getElementById("tanggal").innerHTML=
 now.toLocaleDateString("id-ID",
 {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 }
