@@ -6,7 +6,6 @@
 <title>Jam Masjid LED</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -30,74 +29,61 @@ background-position:center;
 background-repeat:no-repeat;
 }
 
-/* ORNAMEN */
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background-image:url("https://www.transparenttextures.com/patterns/arabesque.png");
-opacity:0.12;
-pointer-events:none;
-}
-
 /* HEADER */
 .header{
-height:90px;
+height:80px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:0 30px;
 background:linear-gradient(90deg,#00c6ff,#0072ff);
-box-shadow:0 0 20px #00eaff;
+box-shadow:0 0 15px #00eaff;
 }
 
-.namaMasjid{
-font-size:32px;
+.nama{
+font-size:28px;
 font-weight:bold;
 }
 
 .tanggal{
-font-size:15px;
+font-size:14px;
 margin-top:5px;
 }
 
-.clockHeader{
-font-size:38px;
+.jamKecil{
+font-size:32px;
 font-weight:bold;
 }
 
-/* LAYOUT FIX */
-.container{
+/* LAYOUT */
+.wrapper{
 display:flex;
-height:calc(100vh - 130px); /* 90 header + 40 running */
+height:calc(100vh - 120px); /* header + running */
 }
 
 /* SIDEBAR */
 .sidebar{
-width:230px;
+width:220px;
 display:flex;
 flex-direction:column;
-height:100%;
 }
 
-.sholat{
+.box{
 flex:1;
 display:flex;
 flex-direction:column;
 justify-content:center;
 padding-left:20px;
-font-size:20px;
+font-size:18px;
 border-bottom:1px solid rgba(255,255,255,0.3);
 }
 
 .waktu{
-font-size:30px;
+font-size:28px;
 font-weight:bold;
 margin-top:5px;
 }
 
-/* WARNA */
 .subuh{background:#00A8FF;}
 .dzuhur{background:#FBC531;}
 .ashar{background:#9C27B0;}
@@ -108,25 +94,24 @@ margin-top:5px;
 .main{
 flex:1;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-height:100%;
+flex-direction:column;
 }
 
-.clock{
-font-size:140px;
+.jamBesar{
+font-size:120px;
 font-weight:bold;
 text-shadow:0 0 30px white;
 }
 
 .countdown{
-font-size:35px;
+font-size:30px;
 color:yellow;
 margin-top:15px;
 }
 
-/* RUNNING TEXT (TIDAK AKAN JADI BLOK BESAR) */
+/* RUNNING TEXT */
 .running{
 position:fixed;
 bottom:0;
@@ -138,19 +123,87 @@ align-items:center;
 background:linear-gradient(90deg,#ff0000,#ff8c00);
 overflow:hidden;
 font-size:18px;
-z-index:10;
 }
 
 .running span{
 white-space:nowrap;
 padding-left:100%;
-animation:run 20s linear infinite;
+animation:jalan 20s linear infinite;
 }
 
-@keyframes run{
+@keyframes jalan{
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
 }
 
-</style>
+/* RESPONSIVE */
+@media(max-width:768px){
+.sidebar{
+width:150px;
+}
+.jamBesar{
+font-size:60px;
+}
+}
 
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<div>
+<div class="nama">MASJID IRSYADUL IBAD</div>
+<div class="tanggal" id="tanggal"></div>
+</div>
+<div class="jamKecil" id="jamKecil"></div>
+</div>
+
+<div class="wrapper">
+
+<div class="sidebar">
+<div class="box subuh">Subuh<div class="waktu">05:11</div></div>
+<div class="box dzuhur">Dzuhur<div class="waktu">12:33</div></div>
+<div class="box ashar">Ashar<div class="waktu">15:54</div></div>
+<div class="box maghrib">Maghrib<div class="waktu">18:36</div></div>
+<div class="box isya">Isya<div class="waktu">19:47</div></div>
+</div>
+
+<div class="main">
+<div class="jamBesar" id="jamBesar"></div>
+<div class="countdown" id="countdown"></div>
+</div>
+
+</div>
+
+<div class="running">
+<span>Selamat datang di Masjid | Mohon matikan HP saat sholat | Ikuti kajian rutin setiap Jumat</span>
+</div>
+
+<script>
+
+function updateJam(){
+let now = new Date();
+
+let jam = now.getHours().toString().padStart(2,"0");
+let menit = now.getMinutes().toString().padStart(2,"0");
+let detik = now.getSeconds().toString().padStart(2,"0");
+
+let waktu = jam + ":" + menit + ":" + detik;
+
+document.getElementById("jamBesar").innerHTML = waktu;
+document.getElementById("jamKecil").innerHTML = waktu;
+
+document.getElementById("tanggal").innerHTML =
+now.toLocaleDateString("id-ID",
+{weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+}
+
+setInterval(updateJam,1000);
+updateJam();
+
+</script>
+
+</body>
+</html>
